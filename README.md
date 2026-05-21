@@ -14,7 +14,43 @@
 ---
 
 ## 1. Equipo de Desarrollo
-
+Seleccione el avatar de cualquier integrante para acceder a su perfil de GitHub:
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/THEGABOALE">
+          <img src="https://github.com/THEGABOALE.png" width="85px;" style="border-radius:50%;" alt="Gabriel Alejandro García Angulo"/><br />
+          <sub><b>Gabriel García</b></sub>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/vaaalval127">
+          <img src="https://github.com/vaaalval127.png" width="85px;" style="border-radius:50%;" alt="Valeria Carolina Grijalva Arévalo"/><br />
+          <sub><b>Valeria Grijalva</b></sub>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/itsDavlix">
+          <img src="https://github.com/itsDavlix.png" width="85px;" style="border-radius:50%;" alt="David Alejandro Espinoza Largaespada"/><br />
+          <sub><b>David Espinoza</b></sub>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/GENEZIS28">
+          <img src="https://github.com/GENEZIS28.png" width="85px;" style="border-radius:50%;" alt="Genesis Nicole Ramos Zambrana"/><br />
+          <sub><b>Genesis Ramos</b></sub>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/HarveyMGJ">
+          <img src="https://github.com/HarveyMGJ.png" width="85px;" style="border-radius:50%;" alt="Harvey Mateo González Jiménez"/><br />
+          <sub><b>Harvey González</b></sub>
+        </a>
+      </td>
+    </tr>
+  </table>
+</div>
 
 ---
 
