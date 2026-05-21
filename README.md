@@ -1,5 +1,5 @@
 # Sistema de Gestión de Notas Personales — "Mis Notas App"
-## Evaluación Final de Programación Orientada a Objetos II
+## Evaluación de Programación Orientada a Objetos II
 
 ---
 
