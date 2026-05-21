@@ -1,126 +1,126 @@
 package com.example.misnotasapp.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.*
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.misnotasapp.viewmodel.NotesViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddEditNoteScreen(
     navController: NavController,
     viewModel: NotesViewModel,
     noteId: Long
 ) {
-    val noteToEdit = viewModel.getNoteById(noteId)
-    val isCreating = noteId == 0L
+    val noteToEdit = viewModel.notes.find { it.id == noteId }
 
-    var title by remember { mutableStateOf(noteToEdit?.title ?: "") }
-    var content by remember { mutableStateOf(noteToEdit?.content ?: "") }
+    var title by remember {
+        mutableStateOf(noteToEdit?.title ?: "")
+    }
 
-    var titleError by remember { mutableStateOf(false) }
-    var contentError by remember { mutableStateOf(false) }
+    var content by remember {
+        mutableStateOf(noteToEdit?.content ?: "")
+    }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(if (isCreating) "Nueva Nota" else "Editar Nota") },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver")
-                    }
-                }
+    val isEditing = noteId != 0L
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFFFF8ED))
+            .padding(16.dp)
+    ) {
+
+        Row {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Volver"
+                )
+            }
+
+            Text(
+                text = if (isEditing) "Editar Nota" else "Nueva Nota",
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top = 12.dp)
             )
         }
-    ) { innerPadding ->
-        Column(
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        OutlinedTextField(
+            value = title,
+            onValueChange = { title = it },
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text("Título") },
+            singleLine = true,
+            shape = RoundedCornerShape(14.dp)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = content,
+            onValueChange = { content = it },
             modifier = Modifier
-                .padding(innerPadding)
-                .padding(16.dp)
-                .fillMaxSize()
+                .fillMaxWidth()
+                .weight(1f),
+            label = { Text("Contenido") },
+            shape = RoundedCornerShape(14.dp)
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = "${content.length} caracteres",
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Button(
+            onClick = {
+                if (isEditing) {
+                    viewModel.updateNote(
+                        id = noteId,
+                        title = title,
+                        content = content
+                    )
+                } else {
+                    viewModel.addNote(
+                        title = title,
+                        content = content
+                    )
+                }
+
+                navController.popBackStack()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(52.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF34A853),
+                contentColor = Color.White
+            ),
+            shape = RoundedCornerShape(18.dp)
         ) {
-            OutlinedTextField(
-                value = title,
-                onValueChange = {
-                    title = it
-                    titleError = it.isBlank()
-                },
-                label = { Text("Título") },
-                singleLine = true,
-                isError = titleError,
-                supportingText = {
-                    if (titleError) {
-                        Text("El título es obligatorio", color = MaterialTheme.colorScheme.error)
-                    }
-                },
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                modifier = Modifier.fillMaxWidth()
+            Text(
+                text = if (isEditing) "Actualizar Nota" else "Guardar Nota",
+                fontWeight = FontWeight.Bold
             )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            OutlinedTextField(
-                value = content,
-                onValueChange = {
-                    content = it
-                    contentError = it.isBlank() && title.isBlank()
-                },
-                label = { Text("Contenido") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                isError = contentError,
-                supportingText = {
-                    // FILA DE SOPORTE: Error a la izquierda y contador alineado a la derecha
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        if (contentError) {
-                            Text("La nota no puede estar vacía", color = MaterialTheme.colorScheme.error)
-                        } else {
-                            Spacer(modifier = Modifier.weight(1f))
-                        }
-                        Text(
-                            text = "${content.length} caracteres",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                },
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Sentences
-                )
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(
-                onClick = {
-                    if (title.isBlank()) {
-                        titleError = true
-                        return@Button
-                    }
-
-                    if (isCreating) {
-                        viewModel.addNote(title, content)
-                    } else {
-                        viewModel.updateNote(noteId, title, content)
-                    }
-                    navController.popBackStack()
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Guardar Nota")
-            }
         }
     }
 }
