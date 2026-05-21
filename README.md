@@ -98,6 +98,10 @@ Para visualizar la explicación técnica del funcionamiento del sistema y la dem
 ### <a href="https://drive.google.com/drive/folders/1Pzaeeerk9hVmZX6WY6h5GuQm_-T3fLgD?usp=sharing"><img src="https://img.shields.io/badge/-0F9D58?style=flat-square&logo=googledrive&logoColor=white" alt="Google Drive" valign="middle"></a> [Ver Video Explicativo](https://drive.google.com/drive/folders/1Pzaeeerk9hVmZX6WY6h5GuQm_-T3fLgD?usp=sharing)
 
 ---
+
+## 7. Link del repo
+### https://github.com/THEGABOALE/Examen-POO-II
+---
 <div align="center">
   <sub>Facultad de Ingeniería y Arquitectura — UAM 2026</sub>
 </div>
